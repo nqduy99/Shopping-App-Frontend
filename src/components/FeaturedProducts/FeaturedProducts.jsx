@@ -1,46 +1,14 @@
 import React from 'react';
+
 import './FeaturedProducts.scss';
 import Card from './../Card/Card';
+import useFetch from './../../hooks/useFetch';
 
 const FeaturedProducts = ({ type }) => {
-    const data = [
-        {
-            id: 1,
-            img: 'https://i.bloganchoi.com/bloganchoi.com/wp-content/uploads/2022/07/lisa-4-blackpink-696x1046.jpg?fit=700%2C20000&quality=95&ssl=1',
-            img2: 'https://vcdn1-giaitri.vnecdn.net/2021/11/24/lisa-2554-1637749826.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=ybWaQjRUALuxjSGVNvqnVQ',
-            title: 'Lisa',
-            isNew: true,
-            oldPrice: 19,
-            price: 12,
-        },
-        {
-            id: 2,
-            img: 'https://i.bloganchoi.com/bloganchoi.com/wp-content/uploads/2022/07/lisa-4-blackpink-696x1046.jpg?fit=700%2C20000&quality=95&ssl=1',
-            img2: 'https://vcdn1-giaitri.vnecdn.net/2021/11/24/lisa-2554-1637749826.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=ybWaQjRUALuxjSGVNvqnVQ',
-            title: 'Lisa',
-            isNew: true,
-            oldPrice: 19,
-            price: 12,
-        },
-        {
-            id: 3,
-            img: 'https://i.bloganchoi.com/bloganchoi.com/wp-content/uploads/2022/07/lisa-4-blackpink-696x1046.jpg?fit=700%2C20000&quality=95&ssl=1',
-            img2: 'https://vcdn1-giaitri.vnecdn.net/2021/11/24/lisa-2554-1637749826.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=ybWaQjRUALuxjSGVNvqnVQ',
-            title: 'Lisa',
-            isNew: true,
-            oldPrice: 19,
-            price: 12,
-        },
-        {
-            id: 4,
-            img: 'https://i.bloganchoi.com/bloganchoi.com/wp-content/uploads/2022/07/lisa-4-blackpink-696x1046.jpg?fit=700%2C20000&quality=95&ssl=1',
-            img2: 'https://vcdn1-giaitri.vnecdn.net/2021/11/24/lisa-2554-1637749826.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=ybWaQjRUALuxjSGVNvqnVQ',
-            title: 'Lisa',
-            isNew: true,
-            oldPrice: 19,
-            price: 12,
-        },
-    ];
+
+    const {data, loading, error} = useFetch(`/products?populate=*&[filters][type][$eq]=${type}`) 
+
+    // console.log(data);
 
     return (
         <div className="featuredProducts">
@@ -54,9 +22,9 @@ const FeaturedProducts = ({ type }) => {
                 </p>
             </div>
             <div className="bottom">
-                {data.map((item)=>{
+                {error ? "Something went wrong!" : (loading ? "loading" : data?.map((item)=>{
                     return <Card key={item.id} item={item}/>
-                })}
+                }))}
             </div>
         </div>
     );
